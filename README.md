@@ -1,2 +1,2 @@
 # Pipeline_test
-This repo is for testing with a CI/CD pipeline to deploy a Web App to Amazon EC2
+This repo is for testing Github Actions to create AWS resource
