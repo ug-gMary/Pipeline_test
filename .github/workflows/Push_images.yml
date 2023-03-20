@@ -32,8 +32,10 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-
+          #echo $ECR_REGISTRY
+          #docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          #docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          #echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          docker build -t 046125674441.dkr.ecr.us-east-1.amazonaws.com/:bdec03bbc081493540d7712f34166d88b0c0f2ec
+          docker push 046125674441.dkr.ecr.us-east-1.amazonaws.com/:bdec03bbc081493540d7712f34166d88b0c0f2ec
+          echo "image=docker push 046125674441.dkr.ecr.us-east-1.amazonaws.com/:bdec03bbc081493540d7712f34166d88b0c0f2ec" >> $GITHUB_OUTPUT
