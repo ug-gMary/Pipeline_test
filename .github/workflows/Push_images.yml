@@ -1,4 +1,4 @@
-name: Docker-push-demo in ECR
+name: Docker-push-demo in AWS ECR
 on: [push]
 jobs:
   Docker-push:
@@ -21,17 +21,21 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: us-east-1
-          
+
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t 046125674441.dkr.ecr.us-east-1.amazonaws.com/:bdec03bbc081493540d7712f34166d88b0c0f2ec
-          docker push 046125674441.dkr.ecr.us-east-1.amazonaws.com/:bdec03bbc081493540d7712f34166d88b0c0f2ec
-          echo "image=docker push 046125674441.dkr.ecr.us-east-1.amazonaws.com/:bdec03bbc081493540d7712f34166d88b0c0f2ec" >> $GITHUB_OUTPUT
+          ECRACCOUNTID=$(aws sts get-caller-identity --query Account --output text)
+          echo ${ECRACCOUNTID}
+          docker build \
+            -t $ECRACCOUNTID.dkr.ecr.us-west-1.amazonaws.com/astra:image_tag \
+            -build-arg base_ecr=$ECRACCOUNTID.dkr.ecr.us-west-1.amazonaws.com/engine_base:astracworker \
+             .
+            docker push $ECRACCOUNTID.dkr.ecr.us-west-1.amazonaws.com/astra:image_tag
+
+     
+
