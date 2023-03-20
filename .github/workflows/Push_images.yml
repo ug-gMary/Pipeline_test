@@ -25,6 +25,17 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
+        
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        run: |
+          ECRACCOUNTID=$(aws sts get-caller-identity --query Account --output text)
+          echo ${ECRACCOUNTID}
+          docker build \
+            -t $ECRACCOUNTID.dkr.ecr.us-west-1.amazonaws.com/astra:image_tag \
+            -build-arg base_ecr=$ECRACCOUNTID.dkr.ecr.us-west-1.amazonaws.com/engine_base:astracworker \
+             .
+            docker push $ECRACCOUNTID.dkr.ecr.us-west-1.amazonaws.com/astra:image_tag
 
 
 
