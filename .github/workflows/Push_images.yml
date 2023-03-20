@@ -8,7 +8,12 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
 
+    
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - run: echo "Checking out repository "
+      
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with: 
@@ -16,5 +21,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: us-east-1
-
-
+          
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - run: |
+           ECRACCOUNTID=$(aws sts get-caller-identity --query Account --output text)
+           echo ${ECRACCOUNTID}
