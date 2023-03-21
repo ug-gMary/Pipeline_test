@@ -39,4 +39,3 @@ jobs:
          IMAGE_TAG: my_image
         run: |
           docker build --tag my-image:v1
-
