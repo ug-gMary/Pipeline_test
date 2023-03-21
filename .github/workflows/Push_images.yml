@@ -38,4 +38,4 @@ jobs:
          ECR_REPOSITORY: test_pipeline
          IMAGE_TAG: my_image
         run: |
-          docker build --tag my-image:v1
+          docker build -t my-image:v1
