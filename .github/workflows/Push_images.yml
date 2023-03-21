@@ -28,6 +28,7 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         run: |
+          file: ./Dockerfile
           ECRACCOUNTID=$(aws sts get-caller-identity --query Account --output text)
           echo ${ECRACCOUNTID}
           docker build -t $ECRACCOUNTID.dkr.ecr.us-west-1.amazonaws.com/astra:image_tag .
