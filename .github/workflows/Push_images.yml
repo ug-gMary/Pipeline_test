@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+            ref: ${{ github.event.pull_request.head.ref }}
+            repository: ${{ github.event.pull_request.head.repo.full_name }}
       - run: echo "Checking out repository "
       
       - name: Configure AWS Credentials
@@ -24,17 +27,3 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-        
-      - name: Build, tag, and push image to Amazon ECR
-        id: build-image
-        run: |
-          file: ./Dockerfile
-          ECRACCOUNTID=$(aws sts get-caller-identity --query Account --output text)
-          echo ${ECRACCOUNTID}
-          docker build -t $ECRACCOUNTID.dkr.ecr.us-west-1.amazonaws.com/astra:image_tag .
-          docker push $ECRACCOUNTID.dkr.ecr.us-west-1.amazonaws.com/astra:image_tag
-
-
-
-     
-
