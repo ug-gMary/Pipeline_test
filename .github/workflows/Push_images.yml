@@ -38,4 +38,4 @@ jobs:
          ECR_REPOSITORY: test_pipeline
          IMAGE_TAG: my_image
         run: |
-          docker build -t my-image:v1
+          docker build -t 046125674441.dkr.ecr.us-east-1.amazonaws.com/:bdec03bbc081493540d7712f34166d88b0c0f2ec
